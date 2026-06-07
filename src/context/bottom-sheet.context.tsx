@@ -9,7 +9,7 @@ useContext,
 useRef,
 useState,
 }from'react'
-import {TouchableWithoutFeedback,View }from'react-native'
+import {Pressable,View }from'react-native'
 
 interface BottomSheetContextType {
   openBottomSheet: (content:React.ReactNode,index:number) =>void
@@ -64,9 +64,11 @@ value={{
       {children}
 
       {isOpen&& (
-<TouchableWithoutFeedback onPress={closeBottomSheet}>
-<View className="absolute inset-0 bg-black/70 z-[1]"/>
-</TouchableWithoutFeedback>
+<Pressable
+className="absolute inset-0 bg-black/70"
+style={{ zIndex:1 }}
+onPress={closeBottomSheet}
+/>
       )}
 
 <BottomSheet
@@ -74,6 +76,9 @@ ref={bottomSheetRef}
 index={index}
 snapPoints={snapPoints}
 enablePanDownToClose
+keyboardBehavior="interactive"
+keyboardBlurBehavior="restore"
+containerStyle={{ zIndex:2,elevation:2 }}
 style={{ zIndex:2 }}
 backgroundStyle={{
           backgroundColor:colors['background-secondary'],

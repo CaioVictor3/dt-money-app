@@ -2,6 +2,7 @@ import { colors } from '@/shared/colors'
 import { MaterialIcons } from '@expo/vector-icons'
 import clsx from 'clsx'
 import { FC, PropsWithChildren } from 'react'
+import { ReactElement } from 'react'
 import { Text, TouchableOpacity, TouchableOpacityProps } from 'react-native'
 
 type AppButtonMode = 'fill' | 'outline'
@@ -18,6 +19,8 @@ export const AppButton:FC<PropsWithChildren<AppButtonParams>>= ({
   ...rest
 }) => {
 const isFill = mode === 'fill'
+const isTextChildren =
+typeof children === 'string'||typeof children === 'number'
 
 return (
 <TouchableOpacity
@@ -31,6 +34,7 @@ iconName?'justify-between':'justify-center',
         }
       )}
 >
+{isTextChildren? (
 <Text
 className={clsx('text-base', {
 'text-white':isFill,
@@ -39,6 +43,9 @@ className={clsx('text-base', {
 >
   {children}
 </Text>
+): (
+children as ReactElement
+)}
 {iconName&& (
 <MaterialIcons
 name={iconName}
