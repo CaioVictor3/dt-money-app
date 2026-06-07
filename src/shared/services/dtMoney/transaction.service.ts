@@ -38,3 +38,9 @@ qs.stringify(params, {
 
 return data
 }
+
+export const deleteTransaction=async (
+transactionId:number
+):Promise<void> => {
+await dtMoneyApi.delete(`/transaction/${transactionId}`)
+}

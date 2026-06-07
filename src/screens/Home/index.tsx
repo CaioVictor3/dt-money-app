@@ -4,9 +4,14 @@ import { useEffect } from 'react'
 import { FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ListHeader } from './ListHeader'
+import { TransactionCard } from './TransactionCard'
 
 export const Home = () => {
-  const { fetchCategories, fetchTransactions } = useTransactionContext()
+  const {
+    fetchCategories,
+    fetchTransactions,
+    transactions,
+  } = useTransactionContext()
   const { errorHandler } = useErrorHandler()
 
   const handleFetchCategories = async () => {
@@ -32,8 +37,11 @@ export const Home = () => {
     <SafeAreaView className="flex-1 bg-background-primary">
       <FlatList
         className="bg-background-secondary"
-        data={[]}
-        renderItem={() => <></>}
+        data={transactions}
+        renderItem={({ item }) => (
+          <TransactionCard transaction={item} />
+        )}
+        keyExtractor={(item) => `transaction-${item.id}`}
         ListHeaderComponent={ListHeader}
       />
     </SafeAreaView>
