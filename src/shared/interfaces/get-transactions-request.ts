@@ -7,3 +7,10 @@ export interface GetTransactionsParams {
   categoryId?: number
   searchText?: string
 }
+
+export interface Pagination {
+  page:number
+  perPage:number
+  totalRows?:number
+  totalPages:number
+}
