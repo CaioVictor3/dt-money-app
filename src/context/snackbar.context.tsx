@@ -2,6 +2,7 @@ import {
   FC,
   PropsWithChildren,
   createContext,
+  useContext,
   useState,
 }from'react'
 
@@ -47,4 +48,10 @@ value={{
       {children}
 </SnackbarContext.Provider>
   )
+}
+
+export const useSnackbarContext= () => {
+const context=useContext(SnackbarContext)
+
+return context
 }

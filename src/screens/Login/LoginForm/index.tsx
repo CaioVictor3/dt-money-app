@@ -2,12 +2,13 @@ import { AppButton } from '@/components/AppButton'
 import { AppInput } from '@/components/AppInput'
 import { useAuthContext } from '@/context/auth.context'
 import { PublicStackParamsList } from '@/routes/PublicRoutes'
-import { AppError } from '@/shared/helpers/appError'
+import { colors } from '@/shared/colors'
+import { useErrorHandler } from '@/shared/hooks/useErrorHandler'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { useForm } from 'react-hook-form'
-import { Text, View } from 'react-native'
+import { ActivityIndicator, Text, View } from 'react-native'
 import { schema } from './schema'
 
 export interface FormLoginParams {
@@ -18,6 +19,7 @@ export interface FormLoginParams {
 export const LoginForm = () => {
   const navigation = useNavigation<StackNavigationProp<PublicStackParamsList>>()
   const { handleAuthenticate } = useAuthContext()
+  const { errorHandler } = useErrorHandler()
   const {
     control,
     handleSubmit,
@@ -34,11 +36,7 @@ export const LoginForm = () => {
     try {
       await handleAuthenticate(userData)
     } catch (error) {
-      console.log(error)
-
-      if (error instanceof AppError) {
-        console.log(error.message)
-      }
+      errorHandler(error, 'Falha ao logar')
     }
   }
 
@@ -64,7 +62,11 @@ export const LoginForm = () => {
           iconName="arrow-forward"
           onPress={handleSubmit(onSubmit)}
         >
-          Login
+          {isSubmitting? (
+            <ActivityIndicator color={colors.white}/>
+          ): (
+            'Login'
+          )}
         </AppButton>
         <View>
           <Text className="mb-6 text-gray-300 text-base">
