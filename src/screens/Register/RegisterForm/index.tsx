@@ -1,9 +1,11 @@
 import {AppButton }from'@/components/AppButton'
 import {AppInput }from'@/components/AppInput'
+import {useAuthContext }from'@/context/auth.context'
 import {PublicStackParamsList }from'@/routes/PublicRoutes'
 import {yupResolver }from'@hookform/resolvers/yup'
 import {useNavigation }from'@react-navigation/native'
 import {StackNavigationProp }from'@react-navigation/stack'
+import {AxiosError }from'axios'
 import {useForm }from'react-hook-form'
 import {Text,View }from'react-native'
 
@@ -18,6 +20,7 @@ export interface FormRegisterParams {
 
 export const RegisterForm = () => {
 const navigation = useNavigation<StackNavigationProp<PublicStackParamsList>>()
+const { handleRegister }=useAuthContext()
 
 const {
     control,
@@ -33,7 +36,15 @@ const {
     resolver:yupResolver(schema),
   })
 
-const onSubmit=async () => {}
+const onSubmit=async (userData:FormRegisterParams) => {
+try {
+await handleRegister(userData)
+  }catch (error) {
+if (error instanceof AxiosError) {
+console.log(error.response?.data)
+    }
+  }
+}
 
 return (
 <>
