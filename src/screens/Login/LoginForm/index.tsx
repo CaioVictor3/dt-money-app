@@ -1,3 +1,4 @@
+import { AppButton } from '@/components/AppButton'
 import { AppInput } from '@/components/AppInput'
 import { useForm } from 'react-hook-form'
 
@@ -31,6 +32,10 @@ export const LoginForm = () => {
         placeholder="Sua senha"
         secureTextEntry
       />
+
+    <AppButton mode="outline" iconName="arrow-forward">
+      Login
+    </AppButton>
     </>
   )
 }
