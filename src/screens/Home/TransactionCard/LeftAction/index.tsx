@@ -6,6 +6,8 @@ import {FC }from'react'
 import {View }from'react-native'
 import {Pressable }from'react-native-gesture-handler'
 
+import {EditTransactionForm }from'./EditTransactionForm'
+
 interface LeftActionProps {
   transaction:Transaction
 }
@@ -16,7 +18,14 @@ export const LeftAction: FC<LeftActionProps> = ({
 const { openBottomSheet }=useBottomSheetContext()
 
 return (
-<Pressable onPress={() => openBottomSheet(<></>, 1)}>
+<Pressable
+onPress={() =>
+openBottomSheet(
+<EditTransactionForm transaction={transaction}/>,
+1
+        )
+      }
+>
 <View className="h-[140px] bg-accent-blue-dark w-[80px] rounded-l-6 items-center justify-center">
 <MaterialIcons
 name="edit"

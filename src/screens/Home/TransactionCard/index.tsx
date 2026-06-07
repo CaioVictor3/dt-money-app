@@ -1,6 +1,7 @@
 import { colors } from '@/shared/colors'
 import { TransactionTypes } from '@/shared/enums/transactionTypes'
 import { Transaction } from '@/shared/interfaces/transaction'
+import { moneyMapper } from '@/shared/utils/moneyMapper'
 import { MaterialIcons } from '@expo/vector-icons'
 import clsx from 'clsx'
 import { format } from 'date-fns'
@@ -8,7 +9,7 @@ import { FC } from 'react'
 import { Text, View } from 'react-native'
 import { Swipeable } from 'react-native-gesture-handler'
 import { RightAction } from './RightAction'
-import {LeftAction } from './LeftAction'
+import { LeftAction } from './LeftAction'
 
 interface TransactionCardParams {
   transaction: Transaction
@@ -52,7 +53,7 @@ export const TransactionCard: FC<TransactionCardParams> = ({
           )}
         >
           {isExpense && '- '}
-          R$ {transaction.value.toFixed(2).replace('.', ',')}
+          R$ {moneyMapper(transaction.value)}
         </Text>
 
         <View className="flex-row w-full justify-between">
